@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Write Article – BlogVerse{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-lg">
+        <div class="card-body p-5">
+          <h2 class="fw-bold mb-1"><i class="bi bi-pencil-square me-2 text-primary"></i>Write a New Article</h2>
+          <p class="text-muted mb-4">Share your knowledge with the world</p>
+
+          <form id="articleForm" method="POST" action="{{ url_for('new_article') }}" novalidate>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Article Title</label>
+              <input type="text" name="title" id="artTitle" class="form-control form-control-lg"
+                     placeholder="Write a compelling title…">
+              <div class="invalid-feedback">Please enter a title.</div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Category</label>
+              <select name="category" id="artCategory" class="form-select form-select-lg">
+                <option value="">— Select Category —</option>
+                <option value="Technology">Technology</option>
+                <option value="Science">Science</option>
+                <option value="Health">Health</option>
+                <option value="Travel">Travel</option>
+                <option value="Food">Food</option>
+                <option value="Business">Business</option>
+                <option value="Education">Education</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Other">Other</option>
+              </select>
+              <div class="invalid-feedback">Please select a category.</div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Content</label>
+              <textarea name="content" id="artContent" class="form-control" rows="12"
+                        placeholder="Start writing your article here…"></textarea>
+              <div class="invalid-feedback">Please write some content.</div>
+              <small class="text-muted" id="wordCount">0 words</small>
+            </div>
+
+            <div class="d-flex gap-3">
+              <button type="submit" class="btn btn-primary btn-lg px-5 fw-semibold">
+                <i class="bi bi-send me-2"></i>Publish Article
+              </button>
+              <a href="{{ url_for('home') }}" class="btn btn-outline-secondary btn-lg px-4">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Live word count
+$('#artContent').on('input', function(){
+  const words = $(this).val().trim().split(/\s+/).filter(w => w.length > 0);
+  $('#wordCount').text(words.length + ' word' + (words.length !== 1 ? 's' : ''));
+});
+</script>
+{% endblock %}

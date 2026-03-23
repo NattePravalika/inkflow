@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ category }} – BlogVerse{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex align-items-center gap-3 mb-5 flex-wrap">
+    <a href="{{ url_for('home') }}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i>Back
+    </a>
+    <div>
+      <h2 class="fw-bold mb-0">
+        <span class="badge category-badge me-2" style="font-size:1rem;">{{ category }}</span>
+        Articles
+      </h2>
+      <p class="text-muted mb-0">{{ articles|length }} article{{ 's' if articles|length != 1 }}</p>
+    </div>
+  </div>
+
+  {% if articles %}
+  <div class="row g-4">
+    {% for a in articles %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card article-card h-100 border-0 shadow-sm">
+        <div class="card-body d-flex flex-column p-4">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <span class="badge category-badge">{{ a.category }}</span>
+            <small class="text-muted">{{ a.created[:10] }}</small>
+          </div>
+          <h5 class="card-title fw-bold mb-2">
+            <a href="{{ url_for('view_article', article_id=a.id) }}" class="article-title-link">{{ a.title }}</a>
+          </h5>
+          <p class="card-text text-muted small flex-grow-1">{{ a.content[:120] }}{% if a.content|length > 120 %}…{% endif %}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <small class="text-muted"><i class="bi bi-person-circle me-1"></i>{{ a.author_name }}</small>
+            <a href="{{ url_for('view_article', article_id=a.id) }}" class="btn btn-sm btn-read">Read →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="text-center py-5">
+    <i class="bi bi-journal-x display-1 text-muted"></i>
+    <p class="mt-3 text-muted">No articles in this category yet.</p>
+    <a href="{{ url_for('home') }}" class="btn btn-primary mt-2">Browse All Articles</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

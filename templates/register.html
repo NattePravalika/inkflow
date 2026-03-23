@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Register – BlogVerse{% endblock %}
+
+{% block content %}
+<div class="auth-section d-flex align-items-center justify-content-center min-vh-80">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-lg auth-card">
+          <div class="card-body p-5">
+            <div class="text-center mb-4">
+              <i class="bi bi-feather2 display-5 text-primary"></i>
+              <h2 class="fw-bold mt-2">Join BlogVerse</h2>
+              <p class="text-muted">Create your account and start writing</p>
+            </div>
+
+            <form id="registerForm" method="POST" action="{{ url_for('register') }}" novalidate>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Full Name</label>
+                <input type="text" name="name" id="regName" class="form-control form-control-lg" placeholder="John Doe">
+                <div class="invalid-feedback">Please enter your name.</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Email Address</label>
+                <input type="email" name="email" id="regEmail" class="form-control form-control-lg" placeholder="you@example.com">
+                <div class="invalid-feedback">Please enter a valid email.</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Password</label>
+                <div class="input-group">
+                  <input type="password" name="password" id="regPassword" class="form-control form-control-lg" placeholder="Min. 6 characters">
+                  <button class="btn btn-outline-secondary" type="button" id="togglePwd">
+                    <i class="bi bi-eye" id="eyeIcon"></i>
+                  </button>
+                </div>
+                <div class="invalid-feedback">Password must be at least 6 characters.</div>
+                <div class="progress mt-2" style="height:5px;" id="pwdStrengthBar">
+                  <div class="progress-bar" id="strengthBar" role="progressbar"></div>
+                </div>
+                <small id="pwdStrengthLabel" class="text-muted"></small>
+              </div>
+
+              <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-primary btn-lg fw-semibold">Create Account</button>
+              </div>
+            </form>
+
+            <p class="text-center mt-4 mb-0 text-muted">
+              Already have an account? <a href="{{ url_for('login') }}" class="fw-semibold text-primary">Sign In</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Password toggle
+$('#togglePwd').on('click', function(){
+  const input = $('#regPassword');
+  const icon  = $('#eyeIcon');
+  if (input.attr('type') === 'password') {
+    input.attr('type', 'text');
+    icon.removeClass('bi-eye').addClass('bi-eye-slash');
+  } else {
+    input.attr('type', 'password');
+    icon.removeClass('bi-eye-slash').addClass('bi-eye');
+  }
+});
+</script>
+{% endblock %}
