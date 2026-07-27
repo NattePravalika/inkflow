@@ -138,7 +138,7 @@ python model/train_model.py
 
 ## 👤 Author
 
-**Your Name** – [GitHub Profile](https://github.com/YOUR_USERNAME)
+Natte Pravalika – [GitHub Profile](https://github.com/NattePravalika)
 
 ---
 
